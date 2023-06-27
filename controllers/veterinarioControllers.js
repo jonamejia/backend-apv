@@ -1,8 +1,8 @@
 import Veterinario from "../models/Veterinario.js";
 
 const registrar = async (req, res) => {
-  const { email } = req.body; 
-  //verificamos en la BD si existe el usuario 
+  const { email } = req.body;
+  //verificamos en la BD si existe el usuario
   const existeUsuario = await Veterinario.findOne({ email });
 
   if (existeUsuario) {
@@ -13,6 +13,7 @@ const registrar = async (req, res) => {
   try {
     const veterinario = new Veterinario(req.body);
     const veterinarioGuardado = await veterinario.save();
+    console.log(veterinarioGuardado);
 
     res.send({ msg: "Registrando usuario" });
   } catch (error) {
@@ -24,4 +25,29 @@ const perfil = (req, res) => {
   res.send({ url: "desde la api/veterinarios/perfil" });
 };
 
-export { registrar, perfil };
+const confirmar = async (req, res) => {
+  const { token } = req.params;
+
+  const usuarioConfirmar = await Veterinario.findOne({ token });
+
+  if (!usuarioConfirmar) {
+    const error = new Error("Token no encontrado");
+    return res.status(404).json({ msg: error.message });
+  }
+
+  try {
+    usuarioConfirmar.token = null;
+    usuarioConfirmar.confirmado = true;
+    await usuarioConfirmar.save();
+
+    res.json({ msg: "Usuario confirmado correctamente" });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const autenticar = (req, res) => {
+  res.json({ msg: "Autenticando" });
+};
+
+export { registrar, perfil, confirmar, autenticar };

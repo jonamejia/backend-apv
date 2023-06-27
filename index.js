@@ -9,7 +9,7 @@ conectarDB();
 console.log(process.env.MOMGO_URI);
 
 app.use("/api/veterinarios", veterinarioRoutes);
-app.use("/api/veterinarios/login", veterinarioRoutes);
+// app.use("/api/veterinarios/login", veterinarioRoutes);
 
 
 const PORT = process.env.PORT || 4000;

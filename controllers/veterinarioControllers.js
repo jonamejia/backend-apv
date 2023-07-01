@@ -22,10 +22,12 @@ const registrar = async (req, res) => {
   }
 };
 
+/* ------------------------------------------------------- */
 const perfil = (req, res) => {
-  res.send({ url: "desde la api/veterinarios/perfil" });
+  res.json({ msg: "Mostrando perfil" });
 };
 
+/********************************************************* */
 const confirmar = async (req, res) => {
   const { token } = req.params;
 
@@ -47,6 +49,7 @@ const confirmar = async (req, res) => {
   }
 };
 
+/*************************************************** */
 const autenticar = async (req, res) => {
   const { email, password } = req.body;
 
